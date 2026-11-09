@@ -1,0 +1,6 @@
+{
+  "name": "MercadoFresco – Supermercado Online & Gestión Integral",
+  "description": "Plataforma completa de supermercado online con catálogo fresco, compras a domicilio, seguimiento en vivo y panel administrativo profesional.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
