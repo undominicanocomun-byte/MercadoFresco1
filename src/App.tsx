@@ -13,6 +13,13 @@ import { AuthModal } from './components/AuthModal';
 import { AdminDashboard } from './components/AdminDashboard';
 import { api } from './services/api';
 import { Category, Order, Product } from './types';
+import { SeasonalCalendar } from './components/SeasonalCalendar';
+import { RecipeStudio } from './components/RecipeStudio';
+import { ProducerSpotlight } from './components/ProducerSpotlight';
+import { ColdChainShowcase } from './components/ColdChainShowcase';
+import { CustomerStories } from './components/CustomerStories';
+import { FaqSection } from './components/FaqSection';
+import { StickyMobileBar } from './components/StickyMobileBar';
 import {
   ShieldCheck,
   Truck,
@@ -250,55 +257,33 @@ function SupermarketStore() {
         )}
       </main>
 
-      {/* 5. Quality & Trust Section */}
-      <section id="compromiso-calidad" className="bg-white border-t border-slate-200 py-12 sm:py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <div className="flex items-center justify-center gap-1.5 text-xs font-bold text-emerald-700 uppercase tracking-wider mb-2">
-              <Leaf className="w-4 h-4" />
-              <span>Calidad Certificada en Origen</span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-              ¿Por qué las familias eligen MercadoFresco?
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-600 mt-3 leading-relaxed">
-              Tratamos tus alimentos como si los escogieras tú mismo en el huerto, empacados con mimo y transportados sin romper la cadena de frío.
-            </p>
-          </div>
+      {/* 5. Editorial & Experience Sections */}
+      <SeasonalCalendar
+        onSelectTagOrCategory={(tagOrCat) => {
+          if (categories.some((c) => c.id === tagOrCat)) {
+            setSelectedCategory(tagOrCat);
+            setSelectedTag(null);
+          } else {
+            setSelectedTag(tagOrCat);
+          }
+          document.getElementById('catalog-section')?.scrollIntoView({ behavior: 'smooth' });
+        }}
+      />
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-3">
-              <div className="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center">
-                <Truck className="w-6 h-6" />
-              </div>
-              <h3 className="text-base font-bold text-slate-900">Vehículos Isotérmicos Activos</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Nuestra flota cuenta con compartimentos refrigerados a 4°C y congelados a -18°C para garantizar que lácteos, carnes y pescados lleguen inalterados a tu cocina.
-              </p>
-            </div>
+      <RecipeStudio products={products} />
 
-            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-3">
-              <div className="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center">
-                <CheckCircle2 className="w-6 h-6" />
-              </div>
-              <h3 className="text-base font-bold text-slate-900">Garantía Incondicional de Frescura</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Si un aguacate no está al punto o una hogaza no está tan crujiente como esperabas, te reembolsamos o enviamos un reemplazo sin preguntas ni trámites engorrosos.
-              </p>
-            </div>
+      <ProducerSpotlight
+        onFilterProducer={(tag) => {
+          setSelectedTag(tag);
+          document.getElementById('catalog-section')?.scrollIntoView({ behavior: 'smooth' });
+        }}
+      />
 
-            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-3">
-              <div className="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center">
-                <Clock className="w-6 h-6" />
-              </div>
-              <h3 className="text-base font-bold text-slate-900">Puntualidad en Franjas de 2 Horas</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                No pierdas el día esperando. Tú decides cuándo recibir: a primera hora de la mañana, al mediodía o en horario express nocturno antes de la cena.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <ColdChainShowcase />
+
+      <CustomerStories />
+
+      <FaqSection />
 
       {/* 6. Footer */}
       <footer className="bg-slate-950 text-slate-400 text-xs py-12 border-t border-slate-900">
@@ -412,6 +397,9 @@ function SupermarketStore() {
         onClose={() => setIsAuthOpen(false)}
         onLoginSuccess={() => loadData()}
       />
+
+      {/* 8. Floating Mobile Cart Bar */}
+      <StickyMobileBar onOpenCheckout={() => setIsCheckoutOpen(true)} />
     </div>
   );
 }
